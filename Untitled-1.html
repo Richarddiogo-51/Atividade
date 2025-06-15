@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bora Treinar</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background-color: #111; color: #fff; }
+    header { background-color: #000; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+    header h1 { font-size: 2.5em; color: #00ff99; }
+
+    nav {
+      background-color: #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 15px;
+    }
+    nav ul li { padding: 10px; }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover { color: #00ff99; }
+    .carrinho {
+      color: #fff;
+      background: #00ff99;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .aba { display: none; padding: 40px 20px; }
+    .aba.ativa { display: block; }
+
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .produto {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    .produto img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    .produto h3 { margin: 10px 0 5px; }
+    .precos span {
+      display: block;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .avaliacao {
+      color: gold;
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    .produto button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #28a745;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #000;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .botao-finalizar, .botao-limpar {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    .botao-finalizar {
+      background-color: #007bff;
+    }
+
+    .botao-limpar {
+      background-color: #dc3545;
+    }
+
+    /* Estilos para formulários (Login e Cadastro) */
+    .form-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #222;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      text-align: center;
+    }
+    .form-container h2 {
+      margin-bottom: 20px;
+      color: #00ff99;
+    }
+    .form-container label {
+      display: block;
+      margin-bottom: 8px;
+      text-align: left;
+      font-weight: bold;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #555;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00ff99;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .form-container button:hover {
+      background-color: #00cc77;
+    }
+    .form-container p {
+        margin-top: 20px;
+    }
+    .form-container a {
+        color: #00ff99;
+        text-decoration: none;
+    }
+    .form-container a:hover {
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Bora Treinar</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#" onclick="mostrarAba('produtos')">Produtos</a></li>
+      <li><a href="#" onclick="tentarAcessarCarrinho()">Carrinho</a></li>
+      <li><a href="#" onclick="mostrarAba('contato')">Contato</a></li>
+    </ul>
+    <div class="carrinho">🛒 Carrinho (0)</div>
+  </nav>
+
+  <section id="produtos" class="aba ativa">
+    <div class="produtos">
+      <div class="produto">
+        <img src="https://images.tcdn.com.br/img/img_prod/875844/par_de_halteres_04_kg_emborrachado_15300031_1_c18ba2aa3cc86475a28af1a2240e0ed5.png" alt="Halteres">
+        <h3>Par de Halteres 4kg</h3>
+        <div class="precos">
+          <span>R$ 89,90 (unitário)</span>
+          <span>R$ 69,90 (atacado - 10 un.)</span>
+        </div>
+        <div class="avaliacao">⭐⭐⭐⭐☆ (82 avaliações)</div>
+        <button onclick="adicionarAoCarrinho('Par de Halteres 4kg', 89.90)">Comprar</button>
+      </div>
+
+      <div class="produto">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvUwMI72dredgqmJtH9nERHVUeahs3tuCnVA&s" alt="Colchonete">
+        <h3>Colchonete EVA</h3>
+        <div class="precos">
+          <span>R$ 59,90 (unitário)</span>
+          <span>R$ 44,90 (atacado - 15 un.)</span>
+        </div>
+        <div class="avaliacao">⭐⭐⭐⭐⭐ (45 avaliações)</div>
+        <button onclick="adicionarAoCarrinho('Colchonete EVA', 59.90)">Comprar</button>
+      </div>
+
+      <div class="produto">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ60vWSIyB2PVRR225FgZ1RoAHSW3Fm-VxaTQ&s" alt="Corda">
+        <h3>Corda de Pular</h3>
+        <div class="precos">
+          <span>R$ 39,90 (unitário)</span>
+          <span>R$ 29,90 (atacado - 20 un.)</span>
+        </div>
+        <div class="avaliacao">⭐⭐⭐⭐☆ (33 avaliações)</div>
+        <button onclick="adicionarAoCarrinho('Corda de Pular', 39.90)">Comprar</button>
+      </div>
+
+      <div class="produto">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR3RLy0CzEJbDTkrbz9SlMIKc2e-rX8mpoAw&s" alt="Elástico de resistência">
+        <h3>Kit Elástico de Resistência</h3>
+        <div class="precos">
+          <span>R$ 119,90 (unitário)</span>
+          <span>R$ 94,90 (atacado - 5 kits)</span>
+        </div>
+        <div class="avaliacao">⭐⭐⭐⭐⭐ (108 avaliações)</div>
+        <button onclick="adicionarAoCarrinho('Kit Elástico de Resistência', 119.90)">Comprar</button>
+      </div>
+
+      <div class="produto">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgFk-U_2F2fKR_ps7iq7_HJ6v346yvvHiKfQ&s" alt="Luvas de treino">
+        <h3>Luvas de Academia</h3>
+        <div class="precos">
+          <span>R$ 49,90 (unitário)</span>
+          <span>R$ 34,90 (atacado - 10 un.)</span>
+        </div>
+        <div class="avaliacao">⭐⭐⭐⭐☆ (65 avaliações)</div>
+        <button onclick="adicionarAoCarrinho('Luvas de Academia', 49.90)">Comprar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="login" class="aba">
+    <div class="form-container">
+      <h2>Acesse sua Conta</h2>
+      <form onsubmit="event.preventDefault(); fazerLogin()">
+        <label for="login-username">Usuário:</label>
+        <input type="text" id="login-username" name="username" required>
+        <label for="login-password">Senha:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Entrar</button>
+      </form>
+      <p>Não tem uma conta? <a href="#" onclick="mostrarAba('cadastro')">Cadastre-se aqui</a></p>
+    </div>
+  </section>
+
+  <section id="cadastro" class="aba">
+    <div class="form-container">
+      <h2>Crie sua Conta</h2>
+      <form onsubmit="event.preventDefault(); fazerCadastro()">
+        <label for="reg-username">Usuário:</label>
+        <input type="text" id="reg-username" name="username" required>
+        <label for="reg-email">Email:</label>
+        <input type="email" id="reg-email" name="email" required>
+        <label for="reg-password">Senha:</label>
+        <input type="password" id="reg-password" name="password" required>
+        <button type="submit">Cadastrar</button>
+      </form>
+      <p>Já tem uma conta? <a href="#" onclick="mostrarAba('login')">Faça login</a></p>
+    </div>
+  </section>
+
+  <section id="carrinho" class="aba">
+    <h2>Seu Carrinho</h2>
+    <div id="itensCarrinho">Você ainda não adicionou produtos ao seu carrinho.</div>
+    <div id="totalCarrinho" style="margin-top: 20px; font-size: 1.2em;">Total: R$ 0.00</div>
+    <button class="botao-finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+    <button class="botao-limpar" onclick="limparCarrinho()">Limpar Carrinho</button>
+  </section>
+
+  <section id="contato" class="aba">
+    <div style="max-width: 600px; margin: auto;">
+      <h2>Entre em Contato com a Bora Treinar</h2>
+      <p>Temos o prazer em ajudá-lo com suas dúvidas e necessidades!</p>
+      <br>
+      <h3>Informações de Contato:</h3>
+      <p><strong>Email:</strong> contato@boratreinar.com.br</p>
+      <p><strong>WhatsApp:</strong> (11) 99999-9999 (Atendimento de Seg. a Sex. das 9h às 18h)</p>
+      <p><strong>Telefone Fixo:</strong> (11) 3333-3333</p>
+      <p><strong>Endereço:</strong> Rua da Malhação, 123 - Bairro Fitness - São Paulo, SP - CEP: 01234-567</p>
+      <br>
+      <h3>Redes Sociais:</h3>
+      <p><strong>Instagram:</strong> <a href="https://www.instagram.com/boratreinar" target="_blank" style="color: #00ff99; text-decoration: none;">@boratreinar</a></p>
+      <p><strong>Facebook:</strong> <a href="https://www.facebook.com/boratreinar" target="_blank" style="color: #00ff99; text-decoration: none;">/boratreinaroficial</a></p>
+      <p><strong>Twitter (X):</strong> <a href="https://twitter.com/boratreinar" target="_blank" style="color: #00ff99; text-decoration: none;">@boratreinar_ofc</a></p>
+      <br>
+      <p>Aguardamos seu contato!</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Bora Treinar. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    let carrinho = [];
+    let contadorCarrinho = 0;
+    let usuarioLogado = false; // Variável para controlar o status de login
+
+    // Load registered users from local storage or initialize an empty object
+    let usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosRegistrados')) || {};
+
+    function adicionarAoCarrinho(nomeProduto, precoProduto) {
+      carrinho.push({ nome: nomeProduto, preco: precoProduto });
+      contadorCarrinho++;
+      atualizarCarrinho();
+      if (usuarioLogado) { // Se o usuário já estiver logado, mostra o carrinho
+        mostrarAba('carrinho');
+      } else { // Caso contrário, mostra a tela de login
+        mostrarAaba('login');
+        alert('Produto adicionado! Faça login ou cadastre-se para ver seu carrinho.');
+      }
+    }
+
+    function atualizarCarrinho() {
+      const carrinhoDiv = document.querySelector('.carrinho');
+      carrinhoDiv.textContent = `🛒 Carrinho (${contadorCarrinho})`;
+
+      const itensCarrinhoDiv = document.getElementById('itensCarrinho');
+      if (contadorCarrinho > 0) {
+        itensCarrinhoDiv.innerHTML = carrinho.map(item => `${item.nome} - R$ ${item.preco.toFixed(2)}`).join('<br>');
+        atualizarTotal();
+      } else {
+        itensCarrinhoDiv.textContent = 'Você ainda não adicionou produtos ao seu carrinho.';
+        document.getElementById('totalCarrinho').textContent = 'Total: R$ 0.00';
+      }
+    }
+
+    function atualizarTotal() {
+      const total = carrinho.reduce((acc, item) => acc + item.preco, 0);
+      document.getElementById('totalCarrinho').textContent = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function finalizarCompra() {
+      if (contadorCarrinho > 0) {
+        alert('Compra finalizada com sucesso! Obrigado pela sua compra!');
+        limparCarrinho();
+      } else {
+        alert('Seu carrinho está vazio!');
+      }
+    }
+
+    function limparCarrinho() {
+      carrinho = [];
+      contadorCarrinho = 0;
+      atualizarCarrinho();
+      if (usuarioLogado) { // Se logado, volta para o carrinho vazio
+        mostrarAba('carrinho');
+      } else { // Se não logado, volta para os produtos
+        mostrarAba('produtos');
+      }
+    }
+
+    function mostrarAba(id) {
+      document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+      document.getElementById(id).classList.add('ativa');
+    }
+
+    function tentarAcessarCarrinho() {
+      if (usuarioLogado) {
+        mostrarAba('carrinho');
+      } else {
+        mostrarAba('login');
+      }
+    }
+
+    function fazerLogin() {
+      const usernameInput = document.getElementById('login-username').value;
+      const passwordInput = document.getElementById('login-password').value;
+
+      if (usuariosRegistrados[usernameInput] && usuariosRegistrados[usernameInput].password === passwordInput) {
+        usuarioLogado = true;
+        alert('Login realizado com sucesso!');
+        mostrarAba('carrinho'); // Redireciona para o carrinho após o login
+        atualizarCarrinho(); // Garante que o carrinho seja exibido corretamente
+      } else {
+        alert('Usuário ou senha incorretos. Tente novamente.');
+      }
+    }
+
+    function fazerCadastro() {
+      const regUsername = document.getElementById('reg-username').value;
+      const regEmail = document.getElementById('reg-email').value;
+      const regPassword = document.getElementById('reg-password').value;
+
+      if (regUsername in usuariosRegistrados) {
+        alert('Nome de usuário já existe. Por favor, escolha outro.');
+        return;
+      }
+
+      // Basic validation for demonstration
+      if (regUsername.length < 3 || regPassword.length < 6 || !regEmail.includes('@')) {
+          alert('Por favor, preencha todos os campos corretamente. O usuário deve ter no mínimo 3 caracteres, a senha 6 e um email válido.');
+          return;
+      }
+
+
+      usuariosRegistrados[regUsername] = {
+        email: regEmail,
+        password: regPassword
+      };
+      localStorage.setItem('usuariosRegistrados', JSON.stringify(usuariosRegistrados)); // Save to local storage
+
+      alert('Cadastro realizado com sucesso! Agora você pode fazer login.');
+      document.getElementById('login-username').value = regUsername; // Pre-fill login form
+      document.getElementById('login-password').value = ''; // Clear password field
+      mostrarAba('login'); // Redirect to login page
+    }
+  </script>
+
+</body>
+</html>
